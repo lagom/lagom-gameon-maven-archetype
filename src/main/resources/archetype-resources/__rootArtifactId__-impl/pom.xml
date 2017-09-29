@@ -1,0 +1,75 @@
+#set( $symbol_dollar = '$' )
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0                       http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>${groupId}</groupId>
+        <artifactId>${rootArtifactId}</artifactId>
+        <version>${version}</version>
+    </parent>
+
+    <artifactId>${artifactId}</artifactId>
+
+    <packaging>jar</packaging>
+
+    <dependencies>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>${rootArtifactId}-api</artifactId>
+            <version>${version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.lightbend.lagom</groupId>
+            <artifactId>lagom-javadsl-server_2.11</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.lightbend.lagom</groupId>
+            <artifactId>lagom-javadsl-cluster_2.11</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.lightbend.lagom</groupId>
+            <artifactId>lagom-logback_2.11</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.typesafe.play</groupId>
+            <artifactId>play-netty-server_2.11</artifactId>
+        </dependency>
+        <!-- Service Locator Provider -->
+        <dependency>
+            <groupId>com.lightbend</groupId>
+            <artifactId>lagom-service-locator-dns_2.11</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.lightbend.lagom</groupId>
+            <artifactId>lagom-javadsl-testkit_2.11</artifactId>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>com.lightbend.lagom</groupId>
+                <artifactId>lagom-maven-plugin</artifactId>
+                <configuration>
+                    <lagomService>true</lagomService>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>io.fabric8</groupId>
+                <artifactId>docker-maven-plugin</artifactId>
+                <configuration>
+                    <skip>false</skip>
+                    <images>
+                        <image>
+                            <build>
+                                <entryPoint>java -cp '/maven/*' -Dplay.crypto.secret="${symbol_dollar}{APPLICATION_SECRET:-none}" -Dplay.akka.actor-system="${symbol_dollar}{AKKA_ACTOR_SYSTEM_NAME:-${rootArtifactId}-v1}" -Dhttp.address="${symbol_dollar}GAMEONSERVICE_BIND_IP" -Dhttp.port="${symbol_dollar}GAMEONSERVICE_BIND_PORT" -Dakka.actor.provider=cluster -Dakka.remote.netty.tcp.hostname="${symbol_dollar}(eval "echo ${symbol_dollar}AKKA_REMOTING_BIND_HOST")" -Dakka.remote.netty.tcp.port="${symbol_dollar}AKKA_REMOTING_BIND_PORT" ${symbol_dollar}(IFS=','; I=0; for NODE in ${symbol_dollar}AKKA_SEED_NODES; do echo "-Dakka.cluster.seed-nodes.${symbol_dollar}I=akka.tcp://${symbol_dollar}AKKA_ACTOR_SYSTEM_NAME@${symbol_dollar}NODE"; I=${symbol_dollar}(expr ${symbol_dollar}I + 1); done) -Dakka.io.dns.resolver=async-dns -Dakka.io.dns.async-dns.resolve-srv=true -Dakka.io.dns.async-dns.resolv-conf=on play.core.server.ProdServerStart</entryPoint>
+                            </build>
+                        </image>
+                    </images>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+</project>

@@ -1,0 +1,91 @@
+{
+  "apiVersion": "apps/v1beta1",
+  "kind": "StatefulSet",
+  "metadata": {
+    "name": "${rootArtifactId}"
+  },
+  "spec": {
+    "serviceName": "${rootArtifactId}",
+    "replicas": 1,
+    "template": {
+      "metadata": {
+        "labels": {
+          "app": "${rootArtifactId}"
+        }
+      },
+      "spec": {
+        "containers": [
+          {
+            "name": "${rootArtifactId}",
+            "image": "registry.ng.bluemix.net/javaone/${rootArtifactId}-impl:1.0-SNAPSHOT",
+            "imagePullPolicy": "Always",
+            "ports": [
+              {
+                "containerPort": 9000,
+                "name": "http-lagom-api"
+              },
+              {
+                "containerPort": 2551,
+                "name": "akka-remote"
+              }
+            ],
+            "env": [
+              {
+                "name": "APPLICATION_SECRET",
+                "value": "${rootArtifactId}-application-secret"
+              },
+              {
+                "name": "GAMEONSERVICE_BIND_PORT",
+                "value": "9000"
+              },
+              {
+                "name": "GAMEONSERVICE_BIND_IP",
+                "value": "0.0.0.0"
+              },
+              {
+                "name": "AKKA_ACTOR_SYSTEM_NAME",
+                "value": "${rootArtifactId}-v1"
+              },
+              {
+                "name": "AKKA_REMOTING_BIND_PORT",
+                "value": "2551"
+              },
+              {
+                "name": "AKKA_REMOTING_BIND_HOST",
+                "value": "$HOSTNAME.${rootArtifactId}.default.svc.cluster.local"
+              },
+              {
+                "name": "AKKA_SEED_NODES",
+                "value": "${rootArtifactId}-0.${rootArtifactId}.default.svc.cluster.local:2551,${rootArtifactId}-1.${rootArtifactId}.default.svc.cluster.local:2551,${rootArtifactId}-2.${rootArtifactId}.default.svc.cluster.local:2551"
+              },
+              {
+                "name": "POD_NAME",
+                "valueFrom": {
+                  "fieldRef": {
+                    "fieldPath": "metadata.name"
+                  }
+                }
+              },
+              {
+                "name": "POD_NAMESPACE",
+                "valueFrom": {
+                  "fieldRef": {
+                    "fieldPath": "metadata.namespace"
+                  }
+                }
+              }
+            ],
+            "readinessProbe": {
+              "httpGet": {
+                "path": "/_status/circuit-breaker/current",
+                "port": 9000
+              },
+              "initialDelaySeconds": 5,
+              "periodSeconds": 5
+            }
+          }
+        ]
+      }
+    }
+  }
+}
