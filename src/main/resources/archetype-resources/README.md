@@ -27,7 +27,7 @@ $symbol_pound$symbol_pound Deploying to Bluemix
 
 3.  Download the configuration files for the Kubernetes cluster:
     ```
-    bx cs cluster-config javaone
+    bx cs cluster-config javaone-gameon-test
     ```
 
     This should print details similar to the following, though the details might differ slightly:
@@ -35,7 +35,7 @@ $symbol_pound$symbol_pound Deploying to Bluemix
     OK
     The configuration for javaone was downloaded successfully. Export environment variables to start using Kubernetes.
 
-    export KUBECONFIG=/home/ubuntu/.bluemix/plugins/container-service/clusters/javaone/kube-config-hou02-javaone.yml
+    export KUBECONFIG=/home/ubuntu/.bluemix/plugins/container-service/clusters/javaone/kube-config-dal10-javaone-gameon-test.yml
     ```
 
 4.  Copy and run the provided `export` command to configure the Kubernetes CLI. Note that you should copy the command printed to your terminal, which might differ slightly from the example above.
