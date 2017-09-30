@@ -18,7 +18,7 @@ $symbol_pound$symbol_pound Deploying to Bluemix
     ```
 
     - You will be prompted for the email address and password. Enter these as provided to you.
-    - You will also be prompted to select an account. Enter "1".
+    - You will also be prompted to select an account. Enter "2" to choose account ID 1e892c355e0ba37560f028df670c2719.
 
 2.  Initialize the Bluemix Container Service plugin:
     ```
