@@ -26,7 +26,7 @@ $symbol_pound$symbol_pound Deploying to Bluemix
 
 3.  Download the configuration files for the Kubernetes cluster:
     ```
-    bx cs cluster-config javaone-gameon-test
+    bx cs cluster-config gameon
     ```
 
     This should print details similar to the following, though the details might differ slightly:
@@ -34,7 +34,7 @@ $symbol_pound$symbol_pound Deploying to Bluemix
     OK
     The configuration for javaone was downloaded successfully. Export environment variables to start using Kubernetes.
 
-    export KUBECONFIG=/home/ubuntu/.bluemix/plugins/container-service/clusters/javaone/kube-config-dal10-javaone-gameon-test.yml
+    export KUBECONFIG=/home/ubuntu/.bluemix/plugins/container-service/clusters/gameon/kube-config-dal10-gameon.yml
     ```
 
 4.  Copy and run the provided `export` command to configure the Kubernetes CLI. Note that you should copy the command printed to your terminal, which might differ slightly from the example above.
@@ -74,7 +74,7 @@ $symbol_pound$symbol_pound Deploying to Bluemix
 
 ** Your room is up!**
 
-Do a quick verification: http://169.46.81.162/${rootArtifactId}
+Do a quick verification: http://169.60.34.197/${rootArtifactId}
 
 $symbol_pound$symbol_pound Register your room
 
@@ -92,9 +92,9 @@ $symbol_pound$symbol_pound Register your room
 
 7. The repository field is optional. Come back and fill it in if you decide to push this into a public repository.
 
-8.  Specify the http endpoint as a basic health endpoint: `http://169.46.81.162/${rootArtifactId}`
+8.  Specify the http endpoint as a basic health endpoint: `http://169.60.34.197/${rootArtifactId}`
 
-9.  Use a WebSocket URL for the WebSocket endpoint: `ws://169.46.81.162/${rootArtifactId}`
+9.  Use a WebSocket URL for the WebSocket endpoint: `ws://169.60.34.197/${rootArtifactId}`
 
 10. Leave the token blank for now. That is an [Advanced adventure](https://book.gameontext.org/walkthroughs/createMore.html) for another time.
 
