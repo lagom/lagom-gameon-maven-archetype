@@ -48,10 +48,6 @@ public class GameOnRoomResponseSerializerTest {
                 "    ${symbol_escape}"name${symbol_escape}": ${symbol_escape}"Room name${symbol_escape}",${symbol_escape}n" +
                 "    ${symbol_escape}"fullName${symbol_escape}": ${symbol_escape}"Room's descriptive full name${symbol_escape}",${symbol_escape}n" +
                 "    ${symbol_escape}"description${symbol_escape}": ${symbol_escape}"Lots of text about what the room looks like${symbol_escape}",${symbol_escape}n" +
-                "    ${symbol_escape}"exits${symbol_escape}": {${symbol_escape}n" +
-                "        ${symbol_escape}"shortDirection${symbol_escape}" : ${symbol_escape}"currentDescription for Player${symbol_escape}",${symbol_escape}n" +
-                "        ${symbol_escape}"N${symbol_escape}" :  ${symbol_escape}"a dark entranceway${symbol_escape}"${symbol_escape}n" +
-                "    },${symbol_escape}n" +
                 "    ${symbol_escape}"commands${symbol_escape}": {${symbol_escape}n" +
                 "        ${symbol_escape}"/custom${symbol_escape}" : ${symbol_escape}"Description of what command does${symbol_escape}"${symbol_escape}n" +
                 "    },${symbol_escape}n" +
@@ -64,9 +60,6 @@ public class GameOnRoomResponseSerializerTest {
                 "Room name",
                 "Room's descriptive full name",
                 "Lots of text about what the room looks like",
-                HashTreePMap.<String, String>empty()
-                        .plus("shortDirection", "currentDescription for Player")
-                        .plus("N", "a dark entranceway"),
                 HashTreePMap.singleton("/custom", "Description of what command does"),
                 TreePVector.<String>empty()
                         .plus("itemA")
@@ -151,9 +144,6 @@ public class GameOnRoomResponseSerializerTest {
                         "Room name",
                         "Room's descriptive full name",
                         "Lots of text about what the room looks like",
-                        HashTreePMap.<String, String>empty()
-                                .plus("shortDirection", "currentDescription for Player")
-                                .plus("N", "a dark entranceway"),
                         HashTreePMap.singleton("/custom", "Description of what command does"),
                         TreePVector.<String>empty()
                                 .plus("itemA")
