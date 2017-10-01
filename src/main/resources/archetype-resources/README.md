@@ -18,7 +18,7 @@ $symbol_pound$symbol_pound Deploying to Bluemix
     ```
 
     - You will be prompted for the email address and password. Enter these as provided to you.
-    - You will also be prompted to select an account. Enter "2" to choose account ID 1e892c355e0ba37560f028df670c2719.
+    - You will also be prompted to select an account. Enter "2" to choose account ID `1e892c355e0ba37560f028df670c2719`.
 
 2.  Initialize the Bluemix Container Service plugin:
     ```
@@ -72,3 +72,48 @@ $symbol_pound$symbol_pound Deploying to Bluemix
     kubectl get -w pod ${rootArtifactId}-0
     ```
     Press control-C to exit once this prints a line with "1/1" and "Running".
+    
+** Your room is up!** 
+
+Do a quick verification: http://169.46.81.162/${rootArtifactId}
+
+$symbol_pound$symbol_pound Register your room
+
+1.  Go to [Game On!](https://gameontext.org) and sign in.
+
+2.  Click on the building icon in the top right of the game screen to go to the Room Management page.
+
+3.  Make sure **Create a new room** is selected from the **Select a room** drop-down.
+
+4.  Provide a descriptive title for your room, e.g. `The Shortest Cut`
+
+5.  A short nickname will be generated, but you can change it if you like (e.g. use your lab id: `${rootArtifactId}`), but remember what it is!
+
+6.  Describe your room (optional). The description provided here is used by the interactive map and other lists or indexes of defined rooms. The decription seen in the game will come from your code.
+
+7. The repository field is optional. Come back and fill it in if you decide to push this into a public repository. 
+
+8.  Specify the http endpoint as a basic health endpoint: `http://169.46.81.162/${rootArtifactId}`
+
+9.  Use a WebSocket URL for the WebSocket endpoint: `ws://169.46.81.162/${rootArtifactId}`
+
+10. Leave the token blank for now. That is an [Advanced adventure](https://book.gameontext.org/walkthroughs/createMore.html) for another time.
+
+11. Describe the doors to your room (Optional). Describe each door as seen [from the outside](https://book.gameontext.org/walkthroughs/registerRoom.html#doors)
+    
+12.  Click **Register** to register the room and add it to the Map!
+
+You can come back to this page to update your room registrations at any time. Choose the room you want to update from the drop-down, make any desired changes, and click either **Update** to save the changes or **Delete** to delete the registration entirely.
+
+$symbol_pound$symbol_pound Hello World!
+
+Use the arrow in the top right to go back to the game screen. Go Play!
+
+* Use `/help` to see available commands (will vary by room). 
+* Use `/exits` to list the exits in the room.
+
+Remember that shortname you set earlier? To visit your room: 
+
+    /teleport <nickname>
+
+
