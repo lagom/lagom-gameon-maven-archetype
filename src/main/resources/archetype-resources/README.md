@@ -14,11 +14,10 @@ $symbol_pound$symbol_pound Deploying to Bluemix
 
 1.  Log in to Bluemix with the workshop email address you were provided:
     ```
-    bx login -a https://api.ng.bluemix.net
+    bx login -a https://api.ng.bluemix.net -c 1e892c355e0ba37560f028df670c2719
     ```
 
-    - You will be prompted for the email address and password. Enter these as provided to you.
-    - You will also be prompted to select an account. Enter "2" to choose account ID `1e892c355e0ba37560f028df670c2719`.
+    You will be prompted for the email address and password. Enter these as provided to you.
 
 2.  Initialize the Bluemix Container Service plugin:
     ```
