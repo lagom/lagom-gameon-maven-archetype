@@ -72,8 +72,8 @@ $symbol_pound$symbol_pound Deploying to Bluemix
     kubectl get -w pod ${rootArtifactId}-0
     ```
     Press control-C to exit once this prints a line with "1/1" and "Running".
-    
-** Your room is up!** 
+
+** Your room is up!**
 
 Do a quick verification: http://169.46.81.162/${rootArtifactId}
 
@@ -91,7 +91,7 @@ $symbol_pound$symbol_pound Register your room
 
 6.  Describe your room (optional). The description provided here is used by the interactive map and other lists or indexes of defined rooms. The decription seen in the game will come from your code.
 
-7. The repository field is optional. Come back and fill it in if you decide to push this into a public repository. 
+7. The repository field is optional. Come back and fill it in if you decide to push this into a public repository.
 
 8.  Specify the http endpoint as a basic health endpoint: `http://169.46.81.162/${rootArtifactId}`
 
@@ -100,7 +100,7 @@ $symbol_pound$symbol_pound Register your room
 10. Leave the token blank for now. That is an [Advanced adventure](https://book.gameontext.org/walkthroughs/createMore.html) for another time.
 
 11. Describe the doors to your room (Optional). Describe each door as seen [from the outside](https://book.gameontext.org/walkthroughs/registerRoom.html#doors)
-    
+
 12.  Click **Register** to register the room and add it to the Map!
 
 You can come back to this page to update your room registrations at any time. Choose the room you want to update from the drop-down, make any desired changes, and click either **Update** to save the changes or **Delete** to delete the registration entirely.
@@ -109,10 +109,10 @@ $symbol_pound$symbol_pound Hello World!
 
 Use the arrow in the top right to go back to the game screen. Go Play!
 
-* Use `/help` to see available commands (will vary by room). 
+* Use `/help` to see available commands (will vary by room).
 * Use `/exits` to list the exits in the room.
 
-Remember that shortname you set earlier? To visit your room: 
+Remember that shortname you set earlier? To visit your room:
 
     /teleport <nickname>
 
