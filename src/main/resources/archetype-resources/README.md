@@ -34,7 +34,7 @@ $symbol_pound$symbol_pound Deploying to Bluemix
     OK
     The configuration for javaone was downloaded successfully. Export environment variables to start using Kubernetes.
 
-    export KUBECONFIG=/home/ubuntu/.bluemix/plugins/container-service/clusters/gameon/kube-config-dal10-gameon.yml
+    export KUBECONFIG=/home/workshop/.bluemix/plugins/container-service/clusters/gameon/kube-config-dal10-gameon.yml
     ```
 
 4.  Copy and run the provided `export` command to configure the Kubernetes CLI. Note that you should copy the command printed to your terminal, which might differ slightly from the example above.
