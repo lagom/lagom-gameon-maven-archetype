@@ -169,7 +169,7 @@ $symbol_pound$symbol_pound Editing your room
 
 6. To make our updated Room service live, we just need to delete the pod and let Kubernetes recreate it. The 'always' image pull policy ensures that Kubernetes will grab the latest Docker image when it recreates the pod.
     ```
-    kubectl delete pod ${rootArtifactId}
+    kubectl delete pod ${rootArtifactId}-0
     ```
 
 7. Wait for the service to begin running:
