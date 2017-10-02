@@ -83,7 +83,7 @@ $symbol_pound$symbol_pound Register your room
 
 3.  Make sure **Create a new room** is selected from the **Select a room** drop-down.
 
-4.  Provide a descriptive title for your room, e.g. `Paul's Diner`, 'The Red Caboose', ... 
+4.  Provide a descriptive title for your room, e.g. `Paul's Diner`, 'The Red Caboose', ...
 
 5.  A short nickname will be generated, but please change the value to `${rootArtifactId}`.
 
@@ -115,12 +115,12 @@ Remember that shortname you set earlier? To visit your room:
     /teleport <nickname>
 
 
-It should show something like this: 
+It should show something like this:
 
 
 > Connecting to Game On Lab. Please hold.
-> 
-> **Room's descriptive full name**  
+>
+> **Room's descriptive full name**
 > Lots of text about what the room looks like
 
 That isn't very original now, is it? For a first kick of the tires, let's make that a little more friendly.
@@ -130,31 +130,31 @@ $symbol_pound$symbol_pound Editing your room
 1. Import your project into IDE of choice
   * Using Eclipse
     1. Start Eclipse
-    2. **File** -> **Import**, 
-    3. Type `maven` to filter and select **Existing Maven project**. 
+    2. **File** -> **Import**,
+    3. Type `maven` to filter and select **Existing Maven project**.
     4. Click **Next**
-    5. Navigate to your project folder `~/${rootArtifactId}`. 
+    5. Navigate to your project folder `~/${rootArtifactId}`.
     6. Click **Finish**
 
   * Using IntelliJ IDEA
     1. From the Welcome screen, click **Import project**
-    2. Navigate to your project folder `~/${rootArtifactId}`. 
+    2. Navigate to your project folder `~/${rootArtifactId}`.
     3. Click **OK**
-    4. On the 'Import Project' screen, select **Import from external model** and choose 
+    4. On the 'Import Project' screen, select **Import from external model** and choose
     5. Allow maven projects to _Import projects automatically_. Use default values and the **Next** button until you get to click **Finish**
 
-  * Importing the `~/${rootArtifactId}` folder into an IDE will create two folders of note: 
+  * Importing the `~/${rootArtifactId}` folder into an IDE will create two folders of note:
     - `${rootArtifactId}-api` -- service api
-    - `${rootArtifactId}-impl` -- service implementation 
+    - `${rootArtifactId}-impl` -- service implementation
 
 2. In the `${rootArtifactId}-impl` project, look in `src/main/java` to open  `com/lightbend/lagom/gameon/${rootArtifactId}/impl/Room.java`
 
-3. The following constants are defined near line 26: 
-  
+3. The following constants are defined near line 26:
+
       static final String FULL_NAME = "Room's descriptive full name";
       static final String DESCRIPTION = "Lots of text about what the room looks like";
-  
-  Change those to something that suits you better! 
+
+  Change those to something that suits you better!
 
 4. Rebuild the docker image
     ```
@@ -171,7 +171,7 @@ $symbol_pound$symbol_pound Editing your room
     ```
     kubectl delete pod ${rootArtifactId}
     ```
-    
+
 7. Wait for the service to begin running:
     ```
     kubectl get -w pod ${rootArtifactId}-0
@@ -186,7 +186,7 @@ Let's now walk through making a simple custom command: `/ping`
 
 1. Open your Room implementation in your editor again (if you happened to close your IDE in the meanwhile, remember it is `com/lightbend/lagom/gameon/${rootArtifactId}/impl/Room.java` under `src/main/java` in the `${rootArtifactId}-impl` project).
 
-2. Around line 37 is a `/ping` command. You'll need to uncomment that line, and remove the semi-colon ahead of it to add the `/ping` command to the list of commands known to your room. It should look something like this (clean it up more if you'd like): 
+2. Around line 37 is a `/ping` command. You'll need to uncomment that line, and remove the semi-colon ahead of it to add the `/ping` command to the list of commands known to your room. It should look something like this (clean it up more if you'd like):
     ```
     static final PMap<String, String> COMMANDS = HashTreePMap.<String, String>empty()
     // Add custom commands below:
@@ -200,8 +200,8 @@ Let's now walk through making a simple custom command: `/ping`
         handlePingCommand(message, command.get().argument);
         break;
     ```
-    
-4. Now we have to define the new method. To take best advantage of cut and paste and place it near things that are alike, we'll put it by `handleUnknownCommand`, near line 166. In fact, let's just cut and paste the handleUnknownCommand method, and change the name and arguments: 
+
+4. Now we have to define the new method. To take best advantage of cut and paste and place it near things that are alike, we'll put it by `handleUnknownCommand`, near line 166. In fact, let's just cut and paste the handleUnknownCommand method, and change the name and arguments:
     ```
     private void handlePingCommand(RoomCommand pingCommand, String argument) {
         Event pingCommandResponse = Event.builder()
@@ -214,12 +214,12 @@ Let's now walk through making a simple custom command: `/ping`
         reply(pingCommandResponse);
     }
     ```
-    This method takes in a command and packages a response, which it then sends. 
-    
-5. There are some changes we need to make to this command. An obvious one is replacing that `UNKNOWN_COMMAND` constant. But before we take off to do that, we should take a closer look at that response. As currently defined, the ping response is specific: it will only go back to the player that initiated it. Let's tell everyone that the player is playing pingpong. The [WebSocket protocol for events](https://book.gameontext.org/microservices/WebSocketProtocol.html#_room_mediator_client_event_message) specifies how to deliver content to everyone, and further, how to direct some content to one player, and other content to everyone else. Focusing  on the `pingCommandResponse` formation. We need to make the following changes: 
+    This method takes in a command and packages a response, which it then sends.
+
+5. There are some changes we need to make to this command. An obvious one is replacing that `UNKNOWN_COMMAND` constant. But before we take off to do that, we should take a closer look at that response. As currently defined, the ping response is specific: it will only go back to the player that initiated it. Let's tell everyone that the player is playing pingpong. The [WebSocket protocol for events](https://book.gameontext.org/microservices/WebSocketProtocol.html#_room_mediator_client_event_message) specifies how to deliver content to everyone, and further, how to direct some content to one player, and other content to everyone else. Focusing  on the `pingCommandResponse` formation. We need to make the following changes:
     * Target all players using `*`
     * Add two entries to the content map, one for the player, and one for everyone else.
-    All told, it should look something like this: 
+    All told, it should look something like this:
     ```
     Event pingCommandResponse = Event.builder()
             .playerId(ALL_PLAYERS)
@@ -240,7 +240,7 @@ Let's now walk through making a simple custom command: `/ping`
 7. There should be no compilation errors (as reported by your IDE) at this point. Let's try adding a test to make sure this works. Open `com/lightbend/lagom/gameon/${rootArtifactId}/impl/RoomServiceIntegrationTest.java` under `src/test/java` in the `${rootArtifactId}-impl` project). We'll add our new test as a neighbor to the test for the Unknown command again, which is somewhere around line 244. Add a test method that looks something like the following. Note that we've typed more explicitly what we expect to be in the message.
 
     ```
-        
+
     @Test
     public void broadcastsPingCommands() throws Exception {
         try (GameOnTester tester = new GameOnTester()) {
