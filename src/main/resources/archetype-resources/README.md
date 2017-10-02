@@ -54,7 +54,6 @@ $symbol_pound$symbol_pound Deploying to Bluemix
     mvn clean package docker:build
     ```
 
-
 8.  Push the Docker image to the Bluemix registry:
     ```
     docker tag javaone/${rootArtifactId}-impl:1.0-SNAPSHOT registry.ng.bluemix.net/javaone/${rootArtifactId}-impl:1.0-SNAPSHOT
@@ -84,9 +83,9 @@ $symbol_pound$symbol_pound Register your room
 
 3.  Make sure **Create a new room** is selected from the **Select a room** drop-down.
 
-4.  Provide a descriptive title for your room, e.g. `The Shortest Cut`
+4.  Provide a descriptive title for your room, e.g. `Paul's Diner`, 'The Red Caboose', ... 
 
-5.  A short nickname will be generated, but you can change it if you like (e.g. use your lab id: `${rootArtifactId}`), but remember what it is!
+5.  A short nickname will be generated, but please change the value to `${rootArtifactId}`.
 
 6.  Describe your room (optional). The description provided here is used by the interactive map and other lists or indexes of defined rooms. The decription seen in the game will come from your code.
 
@@ -116,3 +115,65 @@ Remember that shortname you set earlier? To visit your room:
     /teleport <nickname>
 
 
+It should show something like this: 
+
+
+> Connecting to Game On Lab. Please hold.
+> 
+> **Room's descriptive full name**  
+> Lots of text about what the room looks like
+
+That isn't very original now, is it? For a first kick of the tires, let's make that a little more friendly.
+
+$symbol_pound$symbol_pound Editing your room
+
+1. Import your project into IDE of choice
+  * Using Eclipse
+    1. Start Eclipse
+    2. **File** -> **Import**, 
+    3. Type `maven` to filter and select **Existing Maven project**. 
+    4. Click **Next**
+    5. Navigate to your project folder `~/${rootArtifactId}`. 
+    6. Click **Finish**
+
+  * Using IntelliJ IDEA
+    1. From the Welcome screen, click **Import project**
+    2. Navigate to your project folder `~/${rootArtifactId}`. 
+    3. Click **OK**
+    4. On the 'Import Project' screen, select **Import from external model** and choose 
+    5. Allow maven projects to _Import projects automatically_. Use default values and the **Next** button until you get to click **Finish**
+
+  * Importing the `~/${rootArtifactId}` folder into an IDE will create two folders of note: 
+    - `${rootArtifactId}-api` -- service api
+    - `${rootArtifactId}-impl` -- service implementation 
+
+2. In the `${rootArtifactId}-impl` project, look in `src/main/java` to open  `com/lightbend/lagom/gameon/${rootArtifactId}/impl/Room.java`
+
+3. The following constants are defined near line 26: 
+  
+      static final String FULL_NAME = "Room's descriptive full name";
+      static final String DESCRIPTION = "Lots of text about what the room looks like";
+  
+  Change those to something that suits you better! 
+
+4. Rebuild the docker image
+    ```
+    mvn clean package docker:build
+    ```
+
+5. Re-tag and push the updated Docker image to the Bluemix registry:
+    ```
+    docker tag javaone/${rootArtifactId}-impl:1.0-SNAPSHOT registry.ng.bluemix.net/javaone/${rootArtifactId}-impl:1.0-SNAPSHOT
+    docker push registry.ng.bluemix.net/javaone/${rootArtifactId}-impl:1.0-SNAPSHOT
+    ```
+
+6. To make our updated Room service live, we just need to delete the pod and let Kubernetes recreate it. The 'always' image pull policy ensures that Kubernetes will grab the latest Docker image when it recreates the pod.
+    ```
+    kubectl delete pod ${rootArtifactId}
+    ```
+    
+7. Wait for the service to begin running:
+    ```
+    kubectl get -w pod ${rootArtifactId}-0
+    ```
+Press control-C to exit once this prints a line with "1/1" and "Running".
