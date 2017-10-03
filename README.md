@@ -31,4 +31,10 @@ Get your participant ID from the workshop facilitators. It will be a two-digit n
     - version: (press enter to accept the default)
     - package: (press enter to accept the default)
 
+This creates a directory named gameon17sNN, with "NN" replaced with your assigned participant ID.
+
+```
+cd gameon17sNN
+```
+
 See the `README.md` file in the created project for further instructions.
